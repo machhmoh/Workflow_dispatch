@@ -15,6 +15,16 @@ on:
         default: 'World'
         # Input has to be provided for the workflow to run
         required: true
+      parameter1:
+        description: 'Input parameter 1'
+        required: true
+      parameter2:
+        description: 'Input parameter 2'
+        required: true
+      #parameter3:
+        #description: 'Input parameter 3'
+        #required: true
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -28,3 +38,32 @@ jobs:
     # Runs a single command using the runners shell
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+    - name: Generate choices for parameter3
+      uses: actions/github-script@v5
+      with:
+          script: |
+            const parameter2 = '${{ github.event.inputs.parameter2 }}';
+            let choices;
+            if (parameter2 === 'value1') {
+              choices = ['choice1', 'choice2', 'choice3'];
+            } else if (parameter2 === 'value2') {
+              choices = ['choice4', 'choice5', 'choice6'];
+            } else {
+              choices = ['choice7', 'choice8', 'choice9'];
+            }
+            console.log(choices.join('\n'));
+            id: parameter3_choices
+   # - name: Run my script
+    #  run: |
+     #   ./my_script.sh ${{ github.event.inputs.parameter1 }} ${{ github.event.inputs.parameter2 }} ${{ github.event.inputs.parameter3 }}
+    #  env:
+     #   PARAMETER_3_CHOICES: ${{ steps.parameter3_choices.outputs.result }}
+     # with:
+       #   parameters:
+      #      parameter3:
+         #   description: 'Input parameter 3'
+        #    required: true
+          #  default: ${{ github.event.inputs.parameter3 }}
+           # choices: ${{ env.PARAMETER_3_CHOICES }}
+
+
