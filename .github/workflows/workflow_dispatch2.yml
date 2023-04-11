@@ -1,0 +1,29 @@
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Who to greet
+        options: 
+        - monalisa
+        - cschleiden
+      greet_style:
+        if: name == monalisa
+        type: choice
+        description: How to greet
+        options: 
+        - formal
+        - decent
+      greet_style:
+        if: name == cschleiden
+        type: choice
+        description: How to greet
+        options: 
+        - casual
+        - decent
+      add_emoji:
+        required or required_if: greet_style == casual
+        description: Emoji only on casual greeting
+        options: 
+        - rocket
+        - smiley
